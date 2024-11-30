@@ -19,3 +19,8 @@ Ferramentas:
 8. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 240 sites.
 
 Todas essas ferramentas são extremamente configuráveis.
+
+git clone https://github.com/rafaelcyber1/Tools.git
+cd Tools
+python3 install-packages.py
+apt install exiftool
