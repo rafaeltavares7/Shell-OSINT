@@ -21,6 +21,9 @@ Ferramentas:
 Todas essas ferramentas são extremamente configuráveis.
 
 git clone https://github.com/rafaelcyber1/Tools.git
+
 cd Tools
+
 python3 install-packages.py
+
 apt install exiftool
