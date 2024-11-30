@@ -26,4 +26,8 @@ cd Tools
 
 python3 install-packages.py
 
+mkdir analyzedownloads
+
+cd ..
+
 apt install exiftool
