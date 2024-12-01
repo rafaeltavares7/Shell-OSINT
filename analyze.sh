@@ -17,7 +17,7 @@ echo "|------analyze.sh V.1.0-----|"
 echo "+---------------------------+"
 # Extrair o domínio da URL em $d
 domain=$(echo $d | sed -E 's/^(https?:\/\/)?([^\/]+).*$/\2/')
-domain=$(echo $domain | sed 's/^www\.//')
+domain=$(echo $domain | sed 's/^www\.//') # Para evitar erros ele retira (www) caso tenha.
 echo "Consulta WHOIS: $domain"
 whois $domain | grep -E -i "Tech|admin|name serve" | sed 's/Registry Tech ID:.*//' |  sed 's/Tech Name:.*//' | sed 's/   Name Server:.*//' | sed '/^$/d'
 
