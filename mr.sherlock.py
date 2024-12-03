@@ -52,7 +52,7 @@ social_media_urls = {
     'Threads': 'https://threads.net/{}',
     'XHamster': 'https://xhamster.com/users/{}',
     'Sharesome': 'https://sharesome.com/{}',
-    'YouPorn': 'https://youporn.com/users/{}',
+    'YouPorn': 'https://youporn.com/uservids/ph-{}',
     'Chaturbate': 'https://chaturbate.com/{}',
     'BongaCams': 'https://pt.bongacams.com/profile/{}',
     'Tinder': 'https://tinder.com/@{}',
