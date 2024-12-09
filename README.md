@@ -24,10 +24,4 @@ git clone https://github.com/rafaelcyber1/Tools.git
 
 cd Tools
 
-python3 install-packages.py
-
-mkdir analyzedownloads
-
-cd ..
-
-apt install exiftool
+bash install.sh
