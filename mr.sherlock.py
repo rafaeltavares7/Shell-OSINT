@@ -63,7 +63,7 @@ social_media_urls = {
     'Airbit': 'https://airbit.com/{}',
     'AllMyLinks': 'https://allmylinks.com/{}',
     'AllThingsWorn':'https://www.allthingsworn.com/{}',
-    'AniList': 'https://anilist.co/{}',
+    'AniList': 'https://anilist.co/user/{}/',
     'ArtStation': 'https://www.artstation.com/{}',
     'Blipfoto': 'https://www.blipfoto.com/{}',
     'Blogger': 'https://www.blogger.com/{}',
