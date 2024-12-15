@@ -2,7 +2,7 @@
 echo "+---------------------------+"
 echo "| instagram: @rafael_cyber1 |"
 echo "|---------------------------|"
-echo "|------enumdir.sh V.1.0-----|"
+echo "|------enumdir.sh V.1.1-----|"
 echo "+---------------------------+"
 echo "enumdir.sh <alvo> <wordlist> <processos paralelos>"
 wordlist=$2
