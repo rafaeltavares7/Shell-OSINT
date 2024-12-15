@@ -16,7 +16,7 @@ Ferramentas:
 
 7. scanner.sh: Escaneia domínios e IPs, encontra portas abertas e, às vezes, consegue identificar o banner da porta.
 
-8. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 240 sites.
+8. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 312 sites.
 
 Todas essas ferramentas são extremamente configuráveis.
 
