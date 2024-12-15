@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import argparse
+import time
 
 print("+---------------------------+")
 print("| instagram: @rafael_cyber1 |")
 print("|---------------------------|")
-print("|----mr.sherlock.py V.1.0---|")
+print("|----mr.sherlock.py V.1.1---|")
 print("+---------------------------+")
 # Lista de sites
 social_media_urls = {
@@ -56,8 +57,8 @@ social_media_urls = {
     'Chaturbate': 'https://chaturbate.com/{}',
     'BongaCams': 'https://pt.bongacams.com/profile/{}',
     'Tinder': 'https://tinder.com/@{}',
-    'LiveJasmin': 'https://livejasmin.com/{}',
-    '7 Cups': 'https://www.7cups.com/{}',
+    'LiveJasmin': 'https://livejasmin.com/en/chat/{}',
+    '7 Cups': 'https://www.7cups.com/@{}',
     'Apclips': 'https://apclips.com/{}',
     'AdmireMe': 'https://admireme.vip/{}',
     'Airbit': 'https://airbit.com/{}',
@@ -80,7 +81,6 @@ social_media_urls = {
     'Estante Virtual': 'https://www.estantevirtual.com.br/busca?editora={}',
     'Kwai': 'https://www.kwai.com/@{}',
     'Disqus': 'https://disqus.com/by/{}/?',
-    'Hack This Site': 'https://www.hackthissite.org/user/view/{}',
     'Telegram': 'https://t.me/{}',
     'Duolingo': 'https://www.duolingo.com/profile/{}',
     'Hentai City': 'https://www.hentaicity.com/profile/{}',
@@ -205,7 +205,6 @@ social_media_urls = {
     'Easeus': 'https://br.easeus.com/author/{}.html',
     'Vimeo': 'https://vimeo.com/{}',
     'Sciprofiles': 'https://sciprofiles.com/profile/{}',
-    'Profiles UCSF': 'https://profiles.ucsf.edu/{}',
     'Profiles UCLA': 'https://profiles.ucla.edu/{}',
     'Profiles SC CTSI': 'https://profiles.sc-ctsi.org/{}',
     'Crates': 'https://crates.io/users/{}',
@@ -248,7 +247,81 @@ social_media_urls = {
     'Slideshare': 'https://www.slideshare.net/{}',
     'Framapiaf': 'https://framapiaf.org/@{}',
     'Fediscience': 'https://fediscience.org/@{}',
-    '3hentai': 'https://3hentai.net/artists/{}'
+    '3hentai': 'https://3hentai.net/artists/{}',
+        'Itsfoss': 'https://itsfoss.com/author/{}/',
+    'Itsfoss Community': 'https://itsfoss.community/u/{}/summary',
+    'Dev': 'https://dev.to/{}',
+    'HQ porner': 'https://hqporner.com/actress/{}',
+    'Beeg': 'https://beeg.com/{}',
+    'Beeg Live Sex': 'https://beeglivesex.com/{}',
+    'Porntrex': 'https://www.porntrex.com/models/{}/',
+    'Porngo': 'https://www.porngo.com/models/{}/',
+    'Motherless M': 'https://motherless.com/m/{}',
+    'Motherless G': 'https://motherless.com/g/{}',
+    'You Porn': 'https://www.youporn.com/pornstar/{}/',
+    'Txxx': 'https://txxx.com/channel/{}/',
+    'Porndoe': 'https://porndoe.com/pornstars-profile/{}',
+    'Pornhat': 'https://www.pornhat.com/models/{}/',
+    'Pornhat Sites': 'https://www.pornhat.com/sites/{}',
+    'Ok xxx Sites': 'https://ok.xxx/sites/{}/',
+    'Ok xxx Models': 'https://ok.xxx/models/{}/',
+    'Animezone': 'https://animezone.com.br/author/{}/',
+    'Pornhoarder': 'https://w5.pornhoarder.tv/user/{}/',
+    'Porno Reino Estudios': 'https://www.pornoreino.com/estudio/{}',
+    'Porno Reino Channel': 'https://www.pornoreino.com/channel/{}',
+    'Poringa': 'http://www.poringa.net/{}',
+    'Muyzorras': 'https://www.muyzorras.com/usuarios/{}',
+    'Muyzorras Canales': 'https://www.muyzorras.com/canales/{}',
+    'Porno Gratis Diario': 'https://www.pornogratisdiario.com/canal/{}/',
+    'Porno Gratis Online': 'https://www.pornogratis.online/{}',
+    'Cheemsporn': 'https://cheemsporn.com/videos/actor/{}',
+    'Lovingsiren Actor': 'https://lovingsiren.com/actor/{}/',
+    'Lovingsiren Author': 'https://lovingsiren.com/author/{}/',
+    'Tnaflix': 'https://www.tnaflix.com/profile/{}',
+    'A Outra Metade Mulheres': 'https://aoutrametade.com.br/Mulheres/{}',
+    'A Outra Metade Homens': 'https://aoutrametade.com.br/Homens/{}',
+    'Elenco Digital': 'https://elencodigital.com.br/{}',
+    'Wordpress': 'https://{}.wordpress.com/',
+    'Mixcloud': 'https://www.mixcloud.com/{}/',
+    'Garoto Com Local': 'https://garotocomlocal.com.br/acompanhante-masculino/{}/',
+    'Dailymotion': 'https://www.dailymotion.com/{}',
+    'Garota Relax': 'https://garotarelax.com.br/df/acompanhantes/listing/{}/',
+    'Letras': 'https://www.letras.com/{}/',
+    'Webflow': 'https://webflow.com/@{}',
+    'Rumble': 'https://rumble.com/user/{}',
+    'Tecnoblog': 'https://tecnoblog.net/author/{}/',
+    'Anime New': 'https://animenew.com.br/author/{}/',
+    'Hackaday': 'https://hackaday.com/author/{}/',
+    'Crackmes': 'https://crackmes.one/user/{}',
+    'Wikipedia': 'https://pt.wikipedia.org/wiki/{}',
+    'Clube da Rede': 'https://clubedarede.com/author/{}/',
+    'Play Pilot': 'https://www.playpilot.com/br/user/{}/',
+    'Cara app': 'https://cara.app/{}/all',
+    'Ign': 'https://www.ign.com/person/{}',
+    'Sharesome': 'https://sharesome.com/topic/{}/',
+    'Holopin': 'https://www.holopin.io/@{}#',
+    'Tellonym': 'https://tellonym.me/{}',
+    'Fortnitetracker': 'https://fortnitetracker.com/profile/all/{}',
+    'Forum Hack The box': 'https://forum.hackthebox.com/u/{}/summary',
+    '9Gag Interest': 'https://9gag.com/interest/{}',
+    'Pokemons Showdown': 'https://pokemonshowdown.com/users/{}',
+    'Convite Discord': 'https://discord.com/invite/{}',
+    'Lol Profile Champion': 'https://lolprofile.net/champion/{}',
+    'Buymeacoffee': 'https://buymeacoffee.com/{}',
+    'Steam Community ID': 'https://steamcommunity.com/id/{}',
+    'Steam Community Groups': 'https://steamcommunity.com/groups/{}',
+    'Bit Bucket': 'https://bitbucket.org/{}/',
+    'Club House': 'https://www.clubhouse.com/@{}',
+    'Bandcamp': 'https://bandcamp.com/{}',
+    'Book Crossing': 'https://www.bookcrossing.com/mybookshelf/{}/',
+    'Book Crossing Artists': 'https://www.bookcrossing.com/artists/{}',
+    'Free Sound': 'https://freesound.org/people/{}/',
+    'Pubg': 'https://pubg.op.gg/user/{}',
+    'Blog Gravatar': 'https://blog.gravatar.com/author/{}/',
+    'Skill Share': 'https://www.skillshare.com/pt/user/{}',
+    'Forum Sublime Text': 'https://forum.sublimetext.com/u/{}/summary',
+    'Community Signal Users': 'https://community.signalusers.org/u/{}/summary',
+    'Unsplash': 'https://unsplash.com/@{}',
 }
 # Essa função é responsável por buscar o conteúdo de uma página web, fazendo uma requisição HTTP usando a biblioteca requests.
 def get_page_content(url):
@@ -257,7 +330,7 @@ def get_page_content(url):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36'
         }
 # Cabeçalhos (headers): O User-Agent é um cabeçalho HTTP que simula uma requisição feita por um navegador.        
-        response = requests.get(url, headers=headers, timeout=15) # timeout=15 define que a requisição deve falhar se não for respondida em 15 segundos.
+        response = requests.get(url, headers=headers, timeout=9) # timeout=15 define que a requisição deve falhar se não for respondida em 15 segundos.
         if response.status_code == 200:# checa se o código de status HTTP retornado pela página é 200, que é "OK".
             return response.text
         else:
@@ -283,6 +356,9 @@ def check_social_media(username):
 
         except Exception as e:
             print(f'[!] Erro de requisição para {social_media}: {e}')
+
+        # Atraso de 1 segundo entre cada requisição
+        time.sleep(1)  # Aguarda 1 segundo antes de fazer a próxima requisição.
 
     if not results_found:
         print(f'[-] Nenhum resultado encontrado para o username "{username}"')
