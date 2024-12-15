@@ -18,6 +18,8 @@ Ferramentas:
 
 8. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 312 sites.
 
+9. pingflood.sh: Ele usa uma tecnica conhecida como ping flood para realizar ataques Dos usando o ping.
+
 Todas essas ferramentas são extremamente configuráveis.
 
 git clone https://github.com/rafaelcyber1/Tools.git
