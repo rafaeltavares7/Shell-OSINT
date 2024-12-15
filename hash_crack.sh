@@ -1,41 +1,17 @@
 #!/bin/bash
 
 echo "+---------------------------+"
-echo "| Instagram: @rafael_cyber1 |"
+echo "| instagram: @rafael_cyber1 |"
 echo "|----hash_crack.sh V.1.0----|"
 echo "+---------------------------+"
 
 # Caminho para a wordlist
 wordlist="wordlists/pass.txt"
 
-###############MD4
-
-# Verifica se o primeiro argumento fornecido ao script é "-md4"
-if [ "$1" == "-md4" ]; then
-  # O segundo argumento é o hash que queremos tentar quebrar
-  hash=$2
-
-# Cada linha será comparada com o hash fornecido
-  while IFS= read -r word; do # Inicia o loop
-# echo -n remove a quebra de linha do final da palavra
-# O awk '{print $1}' pega apenas o hash, descartando a parte do nome do arquivo que siria gerada
-    hashed_word=$(echo -n "$word" | openssl dgst -md4 | awk '{print $2}')
-# o openssl retorna algo como MD4(stdin)= <hash>. O awk '{print $2}' pega o hash gerado.
-
-# Compara o hash gerado com o hash fornecido
-    if [ "$hashed_word" == "$hash" ]; then
-# Imprime a senha que corresponde ao hash fornecido
-      echo "Cracked Hash: $word"
-
-# Sai do loop, pois já encontramos a senha
-      break
-    fi
-  done < "$wordlist"
-
 ###############MD5
 
 # Verifica se o primeiro argumento fornecido ao script é "-md5"
-elif [ "$1" == "-md5" ]; then
+if [ "$1" == "-md5" ]; then
   # O segundo argumento é o hash que queremos tentar quebrar
   hash=$2
 
@@ -430,9 +406,9 @@ elif [ "$1" == "-blake2b512" ]; then
 
 elif [ "$1" == "-h" ]; then
   echo "+------------------------------------------------------------+"
-  echo "+ hash_crack.sh: [Argument] [Hash here]: -md4, -md5, -sha1   +"
-  echo "+ -sha224, -sha3-224, -sha256, -sha3-256, -sha384, -sha3-384 +"
-  echo "+ -sha512, -sha3-512, -sha512-224, -sha512-256, -b2, -rmd160 +"
-  echo "+ -sm3, -blake2s256, -blake2b512.                            +"
+  echo "| hash_crack.sh: [Argument] [Hash here]: -md5, -sha1         |"
+  echo "| -sha224, -sha3-224, -sha256, -sha3-256, -sha384, -sha3-384 |"
+  echo "| -sha512, -sha3-512, -sha512-224, -sha512-256, -b2, -rmd160 |"
+  echo "| -sm3, -blake2s256, -blake2b512.                            |"
   echo "+------------------------------------------------------------+"
 fi
