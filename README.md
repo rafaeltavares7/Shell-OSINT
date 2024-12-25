@@ -20,6 +20,10 @@ Ferramentas:
 
 9. pingflood.sh: Ele usa uma tecnica conhecida como ping flood para realizar ataques Dos usando o ping.
 
+10. search-cnpj.sh: Faz consultas de CNPJs usando API.
+
+11. wifi-deauth.sh: Usa o aireplay-ng pra fazer ataque deauth contra uma lista de MACs em loop infinito.
+
 Todas essas ferramentas são extremamente configuráveis.
 
 git clone https://github.com/rafaelcyber1/Tools.git
