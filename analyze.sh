@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "-url" ]; then
+if [ "$1" == "---download" ]; then
 
   d=$1
 
@@ -44,6 +44,39 @@ if [ "$1" == "-url" ]; then
   # -o do grep faz ele imprimir apenas o que corresponde ao padrão.
   # -P ativa o suporte à expressão regular Perl, que usar a sintaxe avançada
   # \K. O \K diz ao grep para "descartar" o que tem antes dessa parte,
+
+elif [ "$1" == "---extrair" ]; then
+  echo "+---------------------------+"
+  echo "| instagram: @rafael_cyber1 |"
+  echo "|---------------------------|"
+  echo "|------analyze.sh V.1.2-----|"
+  echo "+---------------------------+"
+  domain=$(echo $d | sed -E 's/^(https?:\/\/)?([^\/]+).*$/\2/')
+  domain=$(echo $domain | sed 's/^www\.//') # Para evitar erros ele retira (www) caso tenha.
+  echo "Consulta WHOIS: $domain"
+  whois $domain | grep -E -i "Tech|admin|name serve" | sed 's/Registry Tech ID:.*//' |  sed '>
+
+  echo -e "\nIP: $domain"
+  host $domain | grep "has" | sed 's/.* //'
+
+  echo -e "\nEncontrado em (href):"
+  curl -s $d | grep -oP 'href="\K[^"]+'
+
+  echo -e "\nEncontrado em (src):"
+  curl -s $d | grep -oP 'src="\K[^"]+'
+
+  echo -e "\nEmails:" 
+  curl -s $d | grep -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
+  echo -e "\nExtração de informações concluido.\n"
+
 elif [ "$1" == "-h" ]; then
-  echo "analyze.sh -url <url alvo>"
+  echo "+---------------------------+"
+  echo "| instagram: @rafael_cyber1 |"
+  echo "|---------------------------|"
+  echo "|------analyze.sh V.1.2-----|"
+  echo "+---------------------------+"
+  echo -e "\nanalyze.sh [Argument] [URL]\n"
+  echo -e "\n-h = menu.\n"
+  echo -e "\n---download = Download para Analise uma  profunda.\n"
+  echo -e "\n---extrair = Extrair URLs e emails do codigo fonte.\n"
 fi
