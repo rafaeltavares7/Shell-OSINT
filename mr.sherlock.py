@@ -10,6 +10,7 @@ print("|----mr.sherlock.py V.1.1---|")
 print("+---------------------------+")
 # Lista de sites
 social_media_urls = {
+    'Odysee': 'https://odysee.com/@{}',
     'Reddit': 'https://www.reddit.com/user/{}',
     'Medium': 'https://medium.com/@{}',
     'Facebook': 'https://www.facebook.com/{}',
