@@ -4,7 +4,7 @@ if [ "$1" == "---download" ]; then
 
   d=$1
 
-  wget -r -np -k -P analyzedownloads --wait=3 --random-wait $d # Baixar o Site inteiro. -P Especifica que sera salvo no diretório analyzedownloads
+  mkdir -p analyzedownloads && wget -r -np -k -P analyzedownloads --wait=1 --random-wait $d # Baixar o Site inteiro. -P Especifica que sera salvo no diretório analyzedownloads
   # -r (recursivo): Faz o wget baixe a página inicial e, em seguida, siga os links encontrados
   # -np (no parent): Isso significa que o wget não irá sair da área do site indicado (não seguirá links para fora do domínio).
   # -k (convert): Converte os links internos no arquivo baixado, permitindo que você navegue no site offline.
