@@ -2,8 +2,9 @@
 echo "+---------------------------+"
 echo "| instagram: @rafael_cyber1 |"
 echo "|---------------------------|"
-echo "|------scanner.sh V.1.0-----|"
+echo "|------scanner.sh V.1.1-----|"
 echo "+---------------------------+"
+
 service tor start
 # Usando xargs para rodar até 3 processos simultaneamente
 cat wordlists/top_portas.txt | xargs -P 7 -I {} bash -c '
@@ -13,3 +14,4 @@ cat wordlists/top_portas.txt | xargs -P 7 -I {} bash -c '
 ' bash "$1"
 # bash $1 no final do comando é usado para passar o argumento $1
 # bash -c '...': Para executar os comandos dentro de um subshell
+service tor stop
