@@ -1,4 +1,4 @@
-O repositório Tools é um projeto meu de desenvolvimento de ferramentas hacker para estudos e fins éticos.
+O repositório Tools é um projeto meu de desenvolvimento de ferramentas para estudos e fins éticos.
 
 Ferramentas:
 
