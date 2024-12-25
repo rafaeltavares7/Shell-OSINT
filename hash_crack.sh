@@ -6,7 +6,7 @@ echo "|----hash_crack.sh V.1.0----|"
 echo "+---------------------------+"
 
 # Caminho para a wordlist
-wordlist="wordlists/pass.txt"
+wordlist=$3
 
 ###############MD5
 
@@ -406,9 +406,10 @@ elif [ "$1" == "-blake2b512" ]; then
 
 elif [ "$1" == "-h" ]; then
   echo "+------------------------------------------------------------+"
-  echo "| hash_crack.sh: [Argument] [Hash here]: -md5, -sha1         |"
-  echo "| -sha224, -sha3-224, -sha256, -sha3-256, -sha384, -sha3-384 |"
-  echo "| -sha512, -sha3-512, -sha512-224, -sha512-256, -b2, -rmd160 |"
-  echo "| -sm3, -blake2s256, -blake2b512.                            |"
+  echo "| hash_crack.sh: [Argument] [Hash here] [Wordlist]:          |"
+  echo "| -md5, -sha1, -sha224, -sha3-224, -sha256, -sha3-256        |"
+  echo "| -sha384, -sha3-384, -sha512, -sha3-512 -sha512-256, -b2    |"
+  echo "| -sha512-224, -blake2s256, -blake2b512, -rmd160, -sm3       |"
+  echo "| -shake128, -shake256                                       |"
   echo "+------------------------------------------------------------+"
 fi
