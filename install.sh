@@ -7,4 +7,5 @@ apt install openssl -y
 apt install tor -y
 apt install proxychains4 -y
 apt install jq -y
+apt install aircrack-ng -y
 echo "Tudo Pronto ;-)"
