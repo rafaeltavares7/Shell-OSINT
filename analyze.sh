@@ -93,13 +93,13 @@ if [ "$1" == "---download" ]; then
   exiftool -r analyzedownloads | sed 's/File Size.*//' | sed 's/MIME Type.*//' | sed 's/File Type.*//' | sed 's/Derived From Instance ID.*//' | sed 's/Derived From Document ID.*//' | sed 's/History Instance ID.*//' | sed 's/Derived From Original Document ID.*//' | sed 's/Document ID.*//' | sed 's/Original Document ID.*//' | sed 's/Instance ID.*//' | sed 's/History Parameters.*//' | sed 's/History Action.*//' | sed '/^$/d'
   
   echo -e "\nPesquisa com Dorks:" # usa a API do google PSE. Pressisa do KEY e do ID
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}")
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}")
   echo "$json1" | jq -r '.items[].link'
 
-  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}&start=11&num=10")
+  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11&num=10")
   echo "$json2" | jq -r '.items[].link'
 
-  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}&start21=&num=10")
+  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KAY_&cx=_YOUR_ID_&q=site:${domain}&start21=&num=10")
   echo "$json2" | jq -r '.items[].link'
 
   echo -e "\nTextos encontrados:"
@@ -167,13 +167,13 @@ elif [ "$1" == "---extrair" ]; then
   curl -s -A "$selected_agent" -b "$cookie_file" -c "$cookie_file" $d | grep -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
   
   echo -e "\nPesquisa com Dorks:"
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}")
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}")
   echo "$json1" | jq -r '.items[].link'
 
-  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}&start=11&num=10")
+  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11&num=10")
   echo "$json2" | jq -r '.items[].link'
 
-  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domain}&start21=&num=10")
+  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start21=&num=10")
   echo "$json2" | jq -r '.items[].link'
 
   echo -e "\nTextos encontrados:"
