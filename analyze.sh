@@ -96,16 +96,24 @@ if [ "$1" == "---download" ]; then
   json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}")
   echo "$json1" | jq -r '.items[].link'
 
-  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11&num=10")
+  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11")
   echo "$json2" | jq -r '.items[].link'
 
-  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KAY_&cx=_YOUR_ID_&q=site:${domain}&start21=&num=10")
+  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KAY_&cx=_YOUR_ID_&q=site:${domain}&start21")
   echo "$json2" | jq -r '.items[].link'
+
+  json4=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=31")
+  echo "$json4" | jq -r '.items[].link'
+
+  json5=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=41")
+  echo "$json5" | jq -r '.items[].link'
 
   echo -e "\nTextos encontrados:"
   echo "$json1" | jq -r '.items[].snippet'
   echo "$json2" | jq -r '.items[].snippet'
   echo "$json3" | jq -r '.items[].snippet'
+  echo "$json4" | jq -r '.items[].snippet'
+  echo "$json5" | jq -r '.items[].snippet'
 
   echo -e "\nExtração de informações concluido."
   # -o do grep faz ele imprimir apenas o que corresponde ao padrão.
@@ -167,19 +175,27 @@ elif [ "$1" == "---extrair" ]; then
   curl -s -A "$selected_agent" -b "$cookie_file" -c "$cookie_file" $d | grep -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
   
   echo -e "\nPesquisa com Dorks:"
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}")
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=1")
   echo "$json1" | jq -r '.items[].link'
 
-  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11&num=10")
+  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=11")
   echo "$json2" | jq -r '.items[].link'
 
-  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start21=&num=10")
+  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start21")
   echo "$json2" | jq -r '.items[].link'
+
+  json4=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=31")
+  echo "$json4" | jq -r '.items[].link'
+
+  json5=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_YOUR_KEY_&cx=_YOUR_ID_&q=site:${domain}&start=41")
+  echo "$json5" | jq -r '.items[].link'
 
   echo -e "\nTextos encontrados:"
   echo "$json1" | jq -r '.items[].snippet'
   echo "$json2" | jq -r '.items[].snippet'
   echo "$json3" | jq -r '.items[].snippet'
+  echo "$json4" | jq -r '.items[].snippet'
+  echo "$json5" | jq -r '.items[].snippet'
 
   echo -e "\nExtração de informações concluido.\n"
 
