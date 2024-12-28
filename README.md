@@ -24,6 +24,8 @@ Ferramentas:
 
 11. wifi-deauth.sh: Usa o aireplay-ng pra fazer ataque deauth contra uma lista de MACs em loop infinito.
 
+12. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp. 
+
 Todas essas ferramentas são extremamente configuráveis.
 
 git clone https://github.com/rafaelcyber1/Tools.git
