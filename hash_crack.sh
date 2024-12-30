@@ -8,7 +8,7 @@ echo "-- # ███████║███████║███████
 echo "-- # ██╔══██║██╔══██║╚════██║██╔══██║        ██║     ██╔══██╗██╔══██║██║     ██╔═██╗    ╚════██║██╔══██║ #"
 echo "-- # ██║  ██║██║  ██║███████║██║  ██║███████╗╚██████╗██║  ██║██║  ██║╚██████╗██║  ██╗██╗███████║██║  ██║ #"
 echo "-- # ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝ #"
-echo "-- # instagram: @rafael_cyber1 ################################################################### V 1.1 #"
+echo "-- # instagram: @rafael_cyber1 ################################################################### V 1.2 #"
 echo ""
 
 # Caminho para a wordlist
@@ -408,6 +408,27 @@ elif [ "$1" == "-blake2b512" ]; then
     fi
   done < "$wordlist"
 
+###############GPG
+
+# Verifica se o primeiro argumento fornecido ao script é "-gpg"
+elif [ "$1" == "-gpg" ]; then
+    # Tentativa de descriptografar o arquivo com cada senha do wordlist
+    hash=$2
+    while IFS= read -r word; do # inicia o loop
+        # Tenta descriptografar usando a senha do wordlist
+        echo "$word" | gpg --batch --yes --passphrase-fd 0 -d "$hash" > /dev/null 2>&1 # Qualquer coisa que for enviada para /dev/null é simplesmente descartada
+        # Verifica se a descriptografia foi bem-sucedida
+        if [ $? -eq 0 ]; then
+            echo "Cracked Hash: $word"
+            break
+        fi
+    done < "$wordlist"
+
+# --batch desativa interações manuais
+# --yes aceita automaticamente todas as perguntas do GPG
+# --passphrase-fd 0 especifica de onde o GPG deve ler a senha
+# -d instrui o GPG descriptografar o arquivo
+
 ###############HELP
 
 elif [ "$1" == "-h" ]; then
@@ -416,6 +437,6 @@ elif [ "$1" == "-h" ]; then
   echo "| -md5, -sha1, -sha224, -sha3-224, -sha256, -sha3-256        |"
   echo "| -sha384, -sha3-384, -sha512, -sha3-512 -sha512-256, -b2    |"
   echo "| -sha512-224, -blake2s256, -blake2b512, -rmd160, -sm3       |"
-  echo "| -shake128, -shake256                                       |"
+  echo "| -shake128, -shake256, -gpg                                 |"
   echo "+------------------------------------------------------------+"
 fi
