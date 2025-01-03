@@ -10,23 +10,17 @@ Ferramentas:
 
 4. hash_crack.sh: Faz a quebra de hashes e também conta com um menu.
 
-5. pingscan.sh: Pode ser usado para verificar quantos dispositivos estão conectados a uma rede.
+5. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 312 sites.
 
-6. reverse_dns.sh: Realiza uma busca reversa de DNS.
+6. search-cnpj.sh: Faz consultas de CNPJs usando API.
 
-7. scanner.sh: Escaneia domínios e IPs, encontra portas abertas e, às vezes, consegue identificar o banner da porta.
+7. wifi-deauth.sh: Usa o aireplay-ng pra fazer ataque deauth contra uma lista de MACs em loop infinito.
 
-8. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 312 sites.
+8. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp.
 
-9. pingflood.sh: Ele usa uma tecnica conhecida como ping flood para realizar ataques Dos usando o ping.
+9. brute-force.sh: Força bruta de senhas em: ssh, ftp.
 
-10. search-cnpj.sh: Faz consultas de CNPJs usando API.
-
-11. wifi-deauth.sh: Usa o aireplay-ng pra fazer ataque deauth contra uma lista de MACs em loop infinito.
-
-12. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp.
-
-13. brute-force.sh: Força bruta de senhas em: ssh, ftp.
+10. ip-tools.sh: É um canivete suiço de ferramentas pra IPs.
 
 Todas essas ferramentas são extremamente configuráveis.
 
