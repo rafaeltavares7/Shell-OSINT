@@ -24,7 +24,9 @@ Ferramentas:
 
 11. wifi-deauth.sh: Usa o aireplay-ng pra fazer ataque deauth contra uma lista de MACs em loop infinito.
 
-12. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp. 
+12. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp.
+
+13. brute-force.sh: Força bruta de senhas em: ssh, ftp.
 
 Todas essas ferramentas são extremamente configuráveis.
 
