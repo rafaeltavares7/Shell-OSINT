@@ -44,5 +44,5 @@ elif [ "$1" == "-sdir" ]; then
 
 elif [ "$1" == "-h" ]; then
   echo -e "\nEnumerar diretorio: enum.sh -dir URL wordlist"
-  echo -e "Enumerar subdiretorio: enum.sh -sdir dominio.com wordlist\n"
+  echo -e "Enumerar subdominio: enum.sh -sdir dominio.com wordlist\n"
 fi
