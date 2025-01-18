@@ -16,7 +16,7 @@ Ferramentas:
 
 7. video-download.sh: Faz downloads de videos e audios, usando o yt-dlp.
 
-8. brute-force.sh: Força bruta de senhas em: ssh, ftp.
+8. brute-force.sh: Força bruta de senhas em: ssh, ftp, pop3.
 
 9. ip-tools.sh: É um canivete suiço de ferramentas pra IPs.
 
