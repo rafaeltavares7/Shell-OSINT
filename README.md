@@ -8,7 +8,7 @@ Ferramentas:
 
 3. hash_crack.sh: Faz a quebra de hashes e também conta com um menu.
 
-4. mr.sherlock.py: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica 312 sites.
+4. sherlock.sh: Foi inspirado no Sherlock, porém mais preciso. Atualmente, ele verifica cerca de 150 sites.
 
 5. search-cnpj.sh: Faz consultas de CNPJs usando API.
 
