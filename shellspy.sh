@@ -58,7 +58,7 @@ if [ "$1" == "---extract" ]; then
   fi
 
   echo -e "\n\033[0;32m[+] Pesquisa com Dorks:\033[0m"
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=AIzaSyASxXoNMesCCTiLvkwX4C7mOwV_jIi5c1E&cx=9537cba7e08454e15&q=site:${domaintwo}&start=1")
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site:${domaintwo}&start=1")
   # Extrair e colorir os links individualmente
   echo "$json1" | jq -r '.items[].link' | while read link; do
     echo -e "\033[0;32m$link\033[0m"  # Aplica a cor verde a cada link
