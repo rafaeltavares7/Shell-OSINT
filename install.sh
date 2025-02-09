@@ -1,8 +1,12 @@
 #!/bin/bash
 
 echo "Instalando..."
+apt update -y
+apt upgrade -y
+apt install xxd -y
 apt install whois -y
 apt install openssl -y
+apt install p7zip-full -y
 apt install tor -y
 apt install proxychains4 -y
 apt install jq -y
