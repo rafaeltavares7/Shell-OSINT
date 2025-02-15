@@ -7,7 +7,7 @@ echo -e "\033[0;32m ___| |__   ___| | |___ _ __  _   _  \033[0m"
 echo -e "\033[0;32m/ __|  _ \ / _ \ | / __|  _ \| | | | \033[0m"
 echo -e "\033[0;32m\__ \ | | |  __/ | \__ \ |_) | |_| | \033[0m"
 echo -e "\033[0;32m|___/_| |_|\___|_|_|___/  __/ \__  | \033[0m"
-echo -e "\033[0;32m@rafael_cyber1 V 1.0   |_|    |___/  \033[0m"
+echo -e "\033[0;32m@rafael_cyber1 V 1.1   |_|    |___/  \033[0m"
 echo ""
 
 if [ "$1" == "---extract" ]; then
@@ -57,21 +57,21 @@ if [ "$1" == "---extract" ]; then
     echo -e "\033[0;32m$results\033[0m"
   fi
 
-  echo -e "\n\033[0;32m[+] Pesquisa com Dorks:\033[0m"
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site:${domaintwo}&start=1")
-  # Extrair e colorir os links individualmente
-  echo "$json1" | jq -r '.items[].link' | while read link; do
-    echo -e "\033[0;32m$link\033[0m"  # Aplica a cor verde a cada link
-  done
-  sleep 1
-
-  echo -e "\n\033[0;32m[+] Textos encontrados:\033[0m"
-  echo "$json1" | jq -r '.items[].snippet' | while read snippet; do
-    echo -e "\033[0;32m$snippet\033[0m"
-  done
-  sleep 1
-
   echo -e "\n\033[0;32m[+] Extraction Finished\033[0m\n"
+
+elif [ "$1" == "---dorks" ]; then
+  site=$2
+  echo -e "\n\033[0;32m[+] Search: $site\033[0m\n"
+
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22admin%22+OR+%22login%22+OR+%22robots.txt%22");  alr=$(echo "$json1" | jq -r '.items[].link'); echo -e "\033[0;32m$alr\033[0m"
+  sleep 1
+
+  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22index%22+OR+%22assets%22+OR+%22server%22");  ias=$(echo "$json2" | jq -r '.items[].link'); echo -e "\033[0;32m$ias\033[0m"
+  sleep 1
+
+  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22wp-json/wp/v2/users%22+OR+%22uploads%22+OR+%22email%22");  wue=$(echo "$json3" | jq -r '.items[].link'); echo -e "\033[0;32m$wue\033[0m"
+
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
 elif [ "$1" == "---user" ]; then
   user=$2
@@ -849,6 +849,7 @@ elif [ "$1" == "---user" ]; then
 elif [ "$1" == "-h" ]; then
   echo -e "\033[0;32mCOMMANDS:\033[0m"
   echo -e "\033[0;32mshellspy.sh ---extract [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---dorks [DOMAIN]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---user [USER]\033[0m"
   echo -e "\033[0;32mshellspy.sh -h\033[0m"
 fi
