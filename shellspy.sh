@@ -85,6 +85,10 @@ elif [ "$1" == "---dorks" ]; then
 
   echo -e '\n\033[0;32m[+] Dorks in Use: site:pastebin.com "$site"\033[0m'
   json6=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3Apastebin.com+%22${site}%22");  p=$(echo "$json6" | jq -r '.items[].link'); echo -e "\033[0;32m$p\033[0m"
+  sleep 1
+
+  echo -e '\n\033[0;32m[+] Dorks in Use: "cpf" OR "rg" OR "cnpj"\033[0m'
+  json7=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22cpf%22+OR+%22rg%22+OR+%22cnpj%22");  crc=$(echo "$json7" | jq -r '.items[].link'); echo -e "\033[0;32m$crc\033[0m"
 
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
