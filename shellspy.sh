@@ -63,13 +63,28 @@ elif [ "$1" == "---dorks" ]; then
   site=$2
   echo -e "\n\033[0;32m[+] Search: $site\033[0m\n"
 
+  echo -e '\033[0;32m[+] Dorks in Use: "admin" OR "login" OR "robots.txt"\033[0m'
   json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22admin%22+OR+%22login%22+OR+%22robots.txt%22");  alr=$(echo "$json1" | jq -r '.items[].link'); echo -e "\033[0;32m$alr\033[0m"
   sleep 1
 
+  echo -e '\n\033[0;32m[+] Dorks in Use: "index" OR "assets" OR "server"\033[0m'
   json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22index%22+OR+%22assets%22+OR+%22server%22");  ias=$(echo "$json2" | jq -r '.items[].link'); echo -e "\033[0;32m$ias\033[0m"
   sleep 1
 
+  echo -e '\n\033[0;32m[+] Dorks in Use: "wp-json/wp/v2/users" OR "uploads" OR "email"\033[0m' 
   json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22wp-json/wp/v2/users%22+OR+%22uploads%22+OR+%22email%22");  wue=$(echo "$json3" | jq -r '.items[].link'); echo -e "\033[0;32m$wue\033[0m"
+  sleep 1
+
+  echo -e '\n\033[0;32m[+] Dorks in Use: "usr" OR "plugin" OR "passwd"\033[0m'
+  json4=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22usr%22+OR+%22plugin%22+OR+%22passwd%22");  upp=$(echo "$json4" | jq -r '.items[].link'); echo -e "\033[0;32m$upp\033[0m"
+  sleep 1
+
+  echo -e '\n\033[0;32m[+] Dorks in Use: "tel" OR "user" OR "Disallow"\033[0m'
+  json5=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22tel%22+OR+%22user%22+OR+%22Disallow%22");  tud=$(echo "$json5" | jq -r '.items[].link'); echo -e "\033[0;32m$tud\033[0m"
+  sleep 1
+
+  echo -e '\n\033[0;32m[+] Dorks in Use: site:pastebin.com "$site"\033[0m'
+  json6=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3Apastebin.com+%22${site}%22");  p=$(echo "$json6" | jq -r '.items[].link'); echo -e "\033[0;32m$p\033[0m"
 
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
