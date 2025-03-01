@@ -94,7 +94,7 @@ elif [ "$1" == "---dorks" ]; then
 
 elif [ "$1" == "---cache" ]; then
   url="$2"
-  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$url"
+  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$url")
   if [ -n "$archiveorg" ]; then
     echo -e "\033[0;32m[+] http://web.archive.org/web/$url\033[0m"
   fi
