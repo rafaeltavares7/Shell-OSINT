@@ -21,4 +21,3 @@ source yt-dlp-env/bin/activate
 pip install yt-dlp
 
 echo "Tudo Pronto ;-)"
-echo -e "Desative o ambiente virtual com o seguinte comando: deactivate \n"
