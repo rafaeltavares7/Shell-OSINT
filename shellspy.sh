@@ -7,8 +7,8 @@ echo -e "\033[0;32m ___| |__   ___| | |___ _ __  _   _  \033[0m"
 echo -e "\033[0;32m/ __|  _ \ / _ \ | / __|  _ \| | | | \033[0m"
 echo -e "\033[0;32m\__ \ | | |  __/ | \__ \ |_) | |_| | \033[0m"
 echo -e "\033[0;32m|___/_| |_|\___|_|_|___/  __/ \__  | \033[0m"
-echo -e "\033[0;32m@rafael_cyber1 V 1.1   |_|    |___/  \033[0m"
-echo ""
+echo -e "\033[0;32m V 1.2                 |_|    |___/  \033[0m"
+echo -e "\033[0;32m linktr.ee/rafael_tavares1\033[0m\n"
 
 if [ "$1" == "---extract" ]; then
   d=$2
@@ -83,7 +83,7 @@ elif [ "$1" == "---dorks" ]; then
   json5=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22tel%22+OR+%22user%22+OR+%22Disallow%22");  tud=$(echo "$json5" | jq -r '.items[].link'); echo -e "\033[0;32m$tud\033[0m"
   sleep 1
 
-  echo -e '\n\033[0;32m[+] Dorks in Use: site:pastebin.com "$site"\033[0m'
+  echo -e "\n\033[0;32m[+] Dorks in Use: site:pastebin.com $site\033[0m"
   json6=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3Apastebin.com+%22${site}%22");  p=$(echo "$json6" | jq -r '.items[].link'); echo -e "\033[0;32m$p\033[0m"
   sleep 1
 
@@ -91,6 +91,25 @@ elif [ "$1" == "---dorks" ]; then
   json7=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22cpf%22+OR+%22rg%22+OR+%22cnpj%22");  crc=$(echo "$json7" | jq -r '.items[].link'); echo -e "\033[0;32m$crc\033[0m"
 
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
+
+elif [ "$1" == "---cache" ]; then
+  url="$2"
+  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$url">
+  if [ -n "$archiveorg" ]; then
+    echo -e "\033[0;32m[+] http://web.archive.org/web/$url\033[0m"
+  fi
+
+  archivemd=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.md/$url"  | grep "archived")
+  if [ -n "$archivemd" ]; then
+    echo -e "\033[0;32m[+] https://archive.md/$url\033[0m"
+  fi
+
+  archiveph=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.ph/$url" | grep "redirected")
+  if [ -n "$archiveph" ]; then
+    echo -e "\033[0;32m[+] https://archive.ph/$url\033[0m"
+  fi
+
+  echo -e "\n\033[0;32m[+] Verification Completed\033[0m\n"
 
 elif [ "$1" == "---user" ]; then
   user=$2
