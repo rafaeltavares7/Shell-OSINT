@@ -888,6 +888,7 @@ elif [ "$1" == "-h" ]; then
   echo -e "\033[0;32mCOMMANDS:\033[0m"
   echo -e "\033[0;32mshellspy.sh ---extract [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---dorks [DOMAIN]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---cache [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---user [USER]\033[0m"
   echo -e "\033[0;32mshellspy.sh -h\033[0m"
 fi
