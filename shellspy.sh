@@ -280,6 +280,71 @@ elif [ "$1" == "---user" ]; then
     echo -e "\033[0;32m[+] https://forum.csdms.io/u/$user/summary\033[0m"
   fi
 
+  jovemnerd=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://jovemnerd.com.br/autor/$user" | grep "200")
+  if [ -n "$jovemnerd" ]; then
+    echo -e "\033[0;32m[+] https://jovemnerd.com.br/autor/$user\033[0m"
+  fi
+
+  tecnoblog=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://tecnoblog.net/author/$user/" | grep "200")
+  if [ -n "$tecnoblog" ]; then
+    echo -e "\033[0;32m[+] https://tecnoblog.net/author/$user/\033[0m"
+  fi
+
+  tecnoblogc=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://comunidade.tecnoblog.net/u/$user/summary" | grep "200")
+  if [ -n "$tecnoblogc" ]; then
+    echo -e "\033[0;32m[+] https://comunidade.tecnoblog.net/u/$user/summary\033[0m"
+  fi
+
+  laracasts=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://laracasts.com/@$user" | grep "200")
+  if [ -n "$laracasts" ]; then
+    echo -e "\033[0;32m[+] https://laracasts.com/@$user\033[0m"
+  fi
+
+  libreo=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://ask.libreoffice.org/u/$user" | grep "200")
+  if [ -n "$libreo" ]; then
+     echo -e "\033[0;32m[+] https://ask.libreoffice.org/u/$user\033[0m"
+  fi
+
+  wordpress=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://wordpress.org/support/users/$user/" | grep "200")
+  if [ -n "$wordpress" ]; then
+     echo -e "\033[0;32m[+] https://wordpress.org/support/users/$user/\033[0m"
+  fi
+
+  forumknime=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://forum.knime.com/u/$user/summary" | grep "200")
+  if [ -n "$forumknime" ]; then
+     echo -e "\033[0;32m[+] https://forum.knime.com/u/$user/summary\033[0m"
+  fi
+
+  nn=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://community.n8n.io/u/$user/summary" | grep "200")
+  if [ -n "$nn" ]; then
+     echo -e "\033[0;32m[+] https://community.n8n.io/u/$user/summary\033[0m"
+  fi
+
+  discussfra=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://discuss.frappe.io/u/$user/summary" | grep "200")
+  if [ -n "$discussfra" ]; then
+     echo -e "\033[0;32m[+] https://discuss.frappe.io/u/$user/summary\033[0m"
+  fi
+
+  envato=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://forums.envato.com/u/$user/summary" | grep "200")
+  if [ -n "$envato" ]; then
+     echo -e "\033[0;32m[+] https://forums.envato.com/u/$user/summary\033[0m"
+  fi
+
+  discourse=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://discourse.metabase.com/u/$user/summary" | grep "200")
+  if [ -n "$discourse" ]; then
+     echo -e "\033[0;32m[+] https://discourse.metabase.com/u/$user/summary\033[0m"
+  fi
+
+  lemon=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://www.lemon8-app.com/$user" | grep "200")
+  if [ -n "$lemon" ]; then
+     echo -e "\033[0;32m[+] https://www.lemon8-app.com/$user\033[0m"
+  fi
+
+  devmedia=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://www.devmedia.com.br/perfil/$user" | grep "200")
+  if [ -n "$devmedia" ]; then
+     echo -e "\033[0;32m[+] https://www.devmedia.com.br/perfil/$user\033[0m"
+  fi
+
   vinteconto=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://vinteconto.com.br/public/profile/$user" | grep "200")
   if [ -n "$vinteconto" ]; then
     echo -e "\033[0;32m[+] https://vinteconto.com.br/public/profile/$user\033[0m"
