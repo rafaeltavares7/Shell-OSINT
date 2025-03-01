@@ -911,12 +911,7 @@ elif [ "$1" == "---user" ]; then
   if [ -n "$eporneru" ]; then
     echo -e "\033[0;32m[+] https://www.eporner.com/profile/$user/\033[0m"
   fi
-
-  epornerc=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://www.eporner.com/channel/$user/" | grep '<title>' | sed 's/Porn Videos - EPORNER: HD Porn Tube//' | sed 's/<title>//g; s/<\/title>//g')
-  if [ -n "$epornerc" ]; then
-    echo -e "\033[0;32m[+] https://www.eporner.com/channel/$user/\033[0m"
-  fi
-
+  
   xcams=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://www.xcams.cam/en/profile/$user/" | grep "200")
   if [ -n "$xcams" ]; then
     echo -e "\033[0;32m[+] https://www.xcams.cam/en/profile/$user/\033[0m"
