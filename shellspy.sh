@@ -7,7 +7,7 @@ echo -e "\033[0;32m ___| |__   ___| | |___ _ __  _   _  \033[0m"
 echo -e "\033[0;32m/ __|  _ \ / _ \ | / __|  _ \| | | | \033[0m"
 echo -e "\033[0;32m\__ \ | | |  __/ | \__ \ |_) | |_| | \033[0m"
 echo -e "\033[0;32m|___/_| |_|\___|_|_|___/  __/ \__  | \033[0m"
-echo -e "\033[0;32m V 1.2                 |_|    |___/  \033[0m"
+echo -e "\033[0;32m V 1.3                 |_|    |___/  \033[0m"
 echo -e "\033[0;32m linktr.ee/rafael_tavares1\033[0m\n"
 
 if [ "$1" == "---extract" ]; then
@@ -29,26 +29,7 @@ if [ "$1" == "---extract" ]; then
   fi
   sleep 1
 
-  echo -e "\n\033[0;32m[+] Encontrado em (href):\033[0m"
-  href=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" $d | grep -oP 'href="\K[^"]+')
-  if [ -n "$href" ]; then
-    echo -e "\033[0;32m$href\033[0m"
-  fi
-  sleep 1
-
-  echo -e "\n\033[0;32m[+] Encontrado em (src):\033[0m"
-  src=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" $d | grep -oP 'src="\K[^"]+')
-  if [ -n "$src" ]; then
-    echo -e "\033[0;32m$src\033[0m"
-  fi
-  sleep 1
-
-  echo -e "\n\033[0;32m[+] Emails:\033[0m"
-  email=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" $d | grep -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}')
-  if [ -n "$email" ]; then
-    echo -e "\033[0;32m$email\033[0m"
-  fi
-  sleep 1
+  code=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$d" | grep -rhoP '(href|src)="[^"]+"|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' | sed 's/href="//' | sed 's/src="//' | sed 's/"//' | sed '/linux.local/d'); echo -e "\n\033[0;32m[+] Result:\033[0m"; echo -e "\033[0;32m$code\033[0m\n"
   
   echo -e "\n\033[0;32m[+] Pesquisa com Shodan:\033[0m"
   result=$(host $domaintwo | grep 'has address' | head -n 1 | sed "s/$domaintwo has address //") # head -n 1 tras apenas o primeiro resultado
@@ -58,6 +39,21 @@ if [ "$1" == "---extract" ]; then
   fi
 
   echo -e "\n\033[0;32m[+] Extraction Finished\033[0m\n"
+
+elif [ "$1" == "---download-site" ]; then
+  site=$2
+  rm -rf site # Remove os arquivos e subdiretorios do diretorio caso ele exista
+  mkdir -p site # Cria o diretorio caso ele não exista
+  result=$(wget -r -np -k -P site --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site")
+  # -r Ativa o download recursivo
+  # -np Não segue links para deretorios pai
+  # -k Converte os links para que funcionem localmente
+  clear
+  result=$(grep -rhoP '(href|src)="[^"]+"|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' site | sed 's/href="//' | sed 's/src="//' | sed 's/"//'); echo -e "\n\033[0;32m[+] In href and src:\033[0m"; echo -e "\033[0;32m$result\033[0m\n"
+
+  exift=$(exiftool -r site | sed '/ID/d' | sed '/File Size/d' | sed '/File Type/d' | sed '/ExifTool/d' | sed '/scanned/d' | sed '/files read/d'); echo -e "\n\033[0;32m[+] Exiftool:\033[0m"; echo -e "\033[0;32m$exift\033[0m\n"
+
+  echo -e "\n\033[0;32mFinished\033[0m\n"
 
 elif [ "$1" == "---dorks" ]; then
   site=$2
@@ -947,6 +943,7 @@ elif [ "$1" == "---user" ]; then
 elif [ "$1" == "-h" ]; then
   echo -e "\033[0;32mCOMMANDS:\033[0m"
   echo -e "\033[0;32mshellspy.sh ---extract [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---download-site [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---dorks [DOMAIN]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---cache [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---user [USER]\033[0m"
