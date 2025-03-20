@@ -3,8 +3,8 @@
 echo "Instalando..."
 apt update -y
 apt upgrade -y
-apt install whois -y
 apt install jq -y
-apt install exiftool -y
+apt install proxychains -y
+apt install tor -y
 
 echo "Tudo Pronto ;-)"
