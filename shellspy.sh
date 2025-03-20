@@ -7,105 +7,65 @@ echo -e "\033[0;32m ___| |__   ___| | |___ _ __  _   _  \033[0m"
 echo -e "\033[0;32m/ __|  _ \ / _ \ | / __|  _ \| | | | \033[0m"
 echo -e "\033[0;32m\__ \ | | |  __/ | \__ \ |_) | |_| | \033[0m"
 echo -e "\033[0;32m|___/_| |_|\___|_|_|___/  __/ \__  | \033[0m"
-echo -e "\033[0;32m V 1.3                 |_|    |___/  \033[0m"
+echo -e "\033[0;32m V 1.4                 |_|    |___/  \033[0m"
 echo -e "\033[0;32m linktr.ee/rafael_tavares1\033[0m\n"
 
-if [ "$1" == "---extract" ]; then
-  d=$2
-  echo -e "\033[0;32m[+] Extracting information from: $d\033[0m\n"
-  # Extrair o domínio da URL em $d
-  domainone=$(echo $d | sed -E 's/^(https?:\/\/)?([^\/]+).*$/\2/')
-  domaintwo=$(echo $domainone | sed 's/^www\.//') # Para evitar erros ele retira (www) caso tenha.
-  echo -e "\033[0;32m[+] Consulta WHOIS: $domain\033[0m"
-  whois=$(whois $domaintwo | grep -E -i "Tech|admin|name serve" | sed 's/Registry Tech ID:.*//' |  sed 's/Tech Name:.*//' | sed 's/   Name Server:.*//' | sed '/^$/d')
-  if [ -n "$whois" ]; then
-    echo -e "\033[0;32m$whois\033[0m"
+site=$2
+if [ "$1" == "---spider-links" ]; then
+  echo -e "\033[0;32m[+] Extracting Information From: $site\033[0m\n"
+  service tor start
+  spider=$(proxychains wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo -e "\033[0;32m$spider\033[0m"
+  service tor stop
+  rm -r *.com 2>/dev/null
+  rm -r *.org 2>/dev/null
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
+
+elif [ "$1" == "---spider-emails" ]; then
+  echo -e "\033[0;32m[+] Extracting information from: $site\033[0m\n"
+  service tor start
+  spider=$(proxychains wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo "$spider" > arquivo.txt
+  if [ -s arquivo.txt ]; then
+    for dir in $(cat arquivo.txt); do
+       spider=$(proxychains curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$dir" 2>&1 | grep -h -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' | sort -u)
+       if [ -n "$spider" ]; then
+         echo -e "\033[0;32m$spider\033[0m"
+       fi
+    done
   fi
-
-  echo -e "\n\033[0;32m[+] IP: $domain\033[0m"
-  host=$(host $domaintwo | grep "has")
-  if [ -n "$host" ]; then
-    echo -e "\033[0;32m$host\033[0m"
-  fi
-  sleep 1
-
-  code=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$d" | grep -rhoP '(href|src)="[^"]+"|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' | sed 's/href="//' | sed 's/src="//' | sed 's/"//' | sed '/linux.local/d'); echo -e "\n\033[0;32m[+] Result:\033[0m"; echo -e "\033[0;32m$code\033[0m\n"
-  
-  echo -e "\n\033[0;32m[+] Pesquisa com Shodan:\033[0m"
-  result=$(host $domaintwo | grep 'has address' | head -n 1 | sed "s/$domaintwo has address //") # head -n 1 tras apenas o primeiro resultado
-  results=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://www.shodan.io/host/$result" | grep -oP '(?<=Ports open: ).*(?=")') # grep -oP '(?<=Ports open: ).*(?=")') tras tudo depois de Ports open: e antes de "
-  if [ -n "$results" ]; then
-    echo -e "\033[0;32m$results\033[0m"
-  fi
-
-  echo -e "\n\033[0;32m[+] Extraction Finished\033[0m\n"
-
-elif [ "$1" == "---download-site" ]; then
-  site=$2
-  rm -rf site # Remove os arquivos e subdiretorios do diretorio caso ele exista
-  mkdir -p site # Cria o diretorio caso ele não exista
-  result=$(wget -r -np -k -P site --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site")
-  # -r Ativa o download recursivo
-  # -np Não segue links para deretorios pai
-  # -k Converte os links para que funcionem localmente
-  clear
-  result=$(grep -rhoP '(href|src)="[^"]+"|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' site | sed 's/href="//' | sed 's/src="//' | sed 's/"//'); echo -e "\n\033[0;32m[+] In href and src:\033[0m"; echo -e "\033[0;32m$result\033[0m\n"
-
-  exift=$(exiftool -r site | sed '/ID/d' | sed '/File Size/d' | sed '/File Type/d' | sed '/ExifTool/d' | sed '/scanned/d' | sed '/files read/d'); echo -e "\n\033[0;32m[+] Exiftool:\033[0m"; echo -e "\033[0;32m$exift\033[0m\n"
-
+  rm -r *.com 2>/dev/null
+  rm -r *.org 2>/dev/null
+  rm arquivo.txt
+  service tor stop
   echo -e "\n\033[0;32mFinished\033[0m\n"
 
 elif [ "$1" == "---dorks" ]; then
-  site=$2
-  echo -e "\n\033[0;32m[+] Search: $site\033[0m\n"
-
-  echo -e '\033[0;32m[+] Dorks in Use: "admin" OR "login" OR "robots.txt"\033[0m'
-  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22admin%22+OR+%22login%22+OR+%22robots.txt%22");  alr=$(echo "$json1" | jq -r '.items[].link'); echo -e "\033[0;32m$alr\033[0m"
-  sleep 1
-
-  echo -e '\n\033[0;32m[+] Dorks in Use: "index" OR "assets" OR "server"\033[0m'
-  json2=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22index%22+OR+%22assets%22+OR+%22server%22");  ias=$(echo "$json2" | jq -r '.items[].link'); echo -e "\033[0;32m$ias\033[0m"
-  sleep 1
-
-  echo -e '\n\033[0;32m[+] Dorks in Use: "wp-json/wp/v2/users" OR "uploads" OR "email"\033[0m' 
-  json3=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22wp-json/wp/v2/users%22+OR+%22uploads%22+OR+%22email%22");  wue=$(echo "$json3" | jq -r '.items[].link'); echo -e "\033[0;32m$wue\033[0m"
-  sleep 1
-
-  echo -e '\n\033[0;32m[+] Dorks in Use: "usr" OR "plugin" OR "passwd"\033[0m'
-  json4=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22usr%22+OR+%22plugin%22+OR+%22passwd%22");  upp=$(echo "$json4" | jq -r '.items[].link'); echo -e "\033[0;32m$upp\033[0m"
-  sleep 1
-
-  echo -e '\n\033[0;32m[+] Dorks in Use: "tel" OR "user" OR "Disallow"\033[0m'
-  json5=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22tel%22+OR+%22user%22+OR+%22Disallow%22");  tud=$(echo "$json5" | jq -r '.items[].link'); echo -e "\033[0;32m$tud\033[0m"
-  sleep 1
-
-  echo -e "\n\033[0;32m[+] Dorks in Use: site:pastebin.com $site\033[0m"
-  json6=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3Apastebin.com+%22${site}%22");  p=$(echo "$json6" | jq -r '.items[].link'); echo -e "\033[0;32m$p\033[0m"
-  sleep 1
-
-  echo -e '\n\033[0;32m[+] Dorks in Use: "cpf" OR "rg" OR "cnpj"\033[0m'
-  json7=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22cpf%22+OR+%22rg%22+OR+%22cnpj%22");  crc=$(echo "$json7" | jq -r '.items[].link'); echo -e "\033[0;32m$crc\033[0m"
-
+  echo -e "\n\033[0;32m[+] Extracting Information From: $site\033[0m\n"
+  for dork in $(cat dorks.txt); do
+    json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22${dork}%22");  result=$(echo "$json1" | jq -r '.items[]?.link')
+    sleep 1
+    if [ -n "$result" ]; then
+      echo -e "\033[0;32m$result\033[0m"
+    fi
+  done
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
 elif [ "$1" == "---cache" ]; then
-  url="$2"
-  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$url")
+  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$site")
   if [ -n "$archiveorg" ]; then
-    echo -e "\033[0;32m[+] http://web.archive.org/web/$url\033[0m"
+    echo -e "\033[0;32m[+] http://web.archive.org/web/$site\033[0m"
   fi
 
-  archivemd=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.md/$url"  | grep "archived")
+  archivemd=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.md/$site"  | grep "archived")
   if [ -n "$archivemd" ]; then
-    echo -e "\033[0;32m[+] https://archive.md/$url\033[0m"
+    echo -e "\033[0;32m[+] https://archive.md/$site\033[0m"
   fi
 
-  archiveph=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.ph/$url" | grep "redirected")
+  archiveph=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.ph/$site" | grep "redirected")
   if [ -n "$archiveph" ]; then
-    echo -e "\033[0;32m[+] https://archive.ph/$url\033[0m"
+    echo -e "\033[0;32m[+] https://archive.ph/$site\033[0m"
   fi
 
-  echo -e "\n\033[0;32m[+] Verification Completed\033[0m\n"
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
 elif [ "$1" == "---user" ]; then
   user=$2
@@ -942,8 +902,8 @@ elif [ "$1" == "---user" ]; then
 
 elif [ "$1" == "-h" ]; then
   echo -e "\033[0;32mCOMMANDS:\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---extract [URL]\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---download-site [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---spider-links [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---spider-emails [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---dorks [DOMAIN]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---cache [URL]\033[0m"
   echo -e "\033[0;32mshellspy.sh ---user [USER]\033[0m"
