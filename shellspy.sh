@@ -38,17 +38,6 @@ elif [ "$1" == "---spider-emails" ]; then
   service tor stop
   echo -e "\n\033[0;32mFinished\033[0m\n"
 
-elif [ "$1" == "---dorks" ]; then
-  echo -e "\n\033[0;32m[+] Extracting Information From: $site\033[0m\n"
-  for dork in $(cat dorks.txt); do
-    json1=$(curl -s "https://www.googleapis.com/customsearch/v1?key=_KEY_&cx=_ID_&q=site%3A${site}+%22${dork}%22");  result=$(echo "$json1" | jq -r '.items[]?.link')
-    sleep 1
-    if [ -n "$result" ]; then
-      echo -e "\033[0;32m$result\033[0m"
-    fi
-  done
-  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
-
 elif [ "$1" == "---cache" ]; then
   archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$site")
   if [ -n "$archiveorg" ]; then
