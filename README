@@ -1,0 +1,15 @@
+Descrição:
+Script Bash para coleta de informações em testes de penetração e investigação (OSINT). Focado em extrair dados públicos de forma rápida e automatizada.
+
+Comandos Principais (Menu):
+
+    ---spider-links [URL] → Extrai todos os links de uma página web.
+    ---spider-emails [URL] → Coleta e-mails encontrados no site.
+    ---cache [URL] → Verifica versões em cache (Archive).
+    ---user [USER] → Busca por pelo nome de usuario (ex: redes sociais).
+    -h → Exibe este menu de ajuda.
+
+Uso Básico: ./shellspy.sh ---spider-emails https://exemplo.com
+
+Objetivo:
+Automatizar tarefas manuais de reconhecimento inicial em pentests ou investigações digitais.
