@@ -1,32 +1,27 @@
 #!/bin/bash
 
-clear
-
 echo -e "\033[0;32m     _          _ _\033[0m"
 echo -e "\033[0;32m ___| |__   ___| | |___ _ __  _   _  \033[0m"
 echo -e "\033[0;32m/ __|  _ \ / _ \ | / __|  _ \| | | | \033[0m"
 echo -e "\033[0;32m\__ \ | | |  __/ | \__ \ |_) | |_| | \033[0m"
 echo -e "\033[0;32m|___/_| |_|\___|_|_|___/  __/ \__  | \033[0m"
-echo -e "\033[0;32m V 1.4                 |_|    |___/  \033[0m"
-echo -e "\033[0;32m linktr.ee/rafael_tavares1\033[0m\n"
+echo -e "\033[0;32m V 1.5                 |_|    |___/  \033[0m"
+echo -e "\033[0;32m linktr.ee/rafael_tavares.7\033[0m\n"
 
-site=$2
-if [ "$1" == "---spider-links" ]; then
-  echo -e "\033[0;32m[+] Extracting Information From: $site\033[0m\n"
-  service tor start
-  spider=$(proxychains wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo -e "\033[0;32m$spider\033[0m"
-  service tor stop
+alvo="$2"
+if [ "$1" == "---Spider-Links" ]; then
+  echo -e "\033[0;32m[+] Extracting Information From: $alvo\033[0m\n"
+  spider=$(wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$alvo" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo -e "\033[0;32m$spider\033[0m"
   rm -r *.com 2>/dev/null
   rm -r *.org 2>/dev/null
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
-elif [ "$1" == "---spider-emails" ]; then
-  echo -e "\033[0;32m[+] Extracting information from: $site\033[0m\n"
-  service tor start
-  spider=$(proxychains wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$site" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo "$spider" > arquivo.txt
+elif [ "$1" == "---Spider-Emails" ]; then
+  echo -e "\033[0;32m[+] Extracting Information From: $alvo\033[0m\n"
+  spider=$(wget --spider -r -np --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$alvo" 2>&1 | grep "^--" | sed -E 's/^--[0-9-]+ [0-9:]+-- +//' | sort -u); echo "$spider" > arquivo.txt
   if [ -s arquivo.txt ]; then
     for dir in $(cat arquivo.txt); do
-       spider=$(proxychains curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$dir" 2>&1 | grep -h -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' | sort -u)
+       spider=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "$dir" 2>&1 | grep -h -oP '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' | sort -u)
        if [ -n "$spider" ]; then
          echo -e "\033[0;32m$spider\033[0m"
        fi
@@ -35,28 +30,52 @@ elif [ "$1" == "---spider-emails" ]; then
   rm -r *.com 2>/dev/null
   rm -r *.org 2>/dev/null
   rm arquivo.txt
-  service tor stop
   echo -e "\n\033[0;32mFinished\033[0m\n"
 
-elif [ "$1" == "---cache" ]; then
-  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$site")
+elif [ "$1" == "---Check-Cache" ]; then
+  archiveorg=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "http://web.archive.org/web/$alvo")
   if [ -n "$archiveorg" ]; then
-    echo -e "\033[0;32m[+] http://web.archive.org/web/$site\033[0m"
+    echo -e "\033[0;32m[+] http://web.archive.org/web/$alvo\033[0m"
   fi
 
-  archivemd=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.md/$site"  | grep "archived")
+  archivemd=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.md/$alvo"  | grep "archived")
   if [ -n "$archivemd" ]; then
-    echo -e "\033[0;32m[+] https://archive.md/$site\033[0m"
+    echo -e "\033[0;32m[+] https://archive.md/$alvo\033[0m"
   fi
 
-  archiveph=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.ph/$site" | grep "redirected")
+  archiveph=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://archive.ph/$alvo" | grep "redirected")
   if [ -n "$archiveph" ]; then
-    echo -e "\033[0;32m[+] https://archive.ph/$site\033[0m"
+    echo -e "\033[0;32m[+] https://archive.ph/$alvo\033[0m"
   fi
 
   echo -e "\n\033[0;32m[+] Finished\033[0m\n"
 
-elif [ "$1" == "---user" ]; then
+elif [ "$1" == "---Shodan" ]; then
+  domain=$(host "$alvo" | grep "[0-9]" | sed 's/[a-zA-Z]//g' | sed 's/.//' | sed 's/ //g' | head -1)
+  result=$(curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" "https://www.shodan.io/host/$domain" | grep -E 'content="Ports open:|<td><strong><a href="/search?' | sed -E 's/.*content="([^"]+)".*/\1/; s/.*<a href="[^"]+"[^>]*>([^<]+)<.*/\1/'); echo -e "\033[0;32m$result\033[0m"
+
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
+
+elif [ "$1" == "---Download-V" ]; then
+  read -p $'\e[0;32mSaved to? \e[0m ' folder
+  source venv/bin/activate
+  pip3 install --upgrade yt-dlp
+
+  mkdir -p "$folder" && cd "$folder" && yt-dlp -o "%(title)s.%(ext)s" -f "bestvideo+bestaudio/best" --merge-output-format mp4 --write-description --write-info-json --write-thumbnail --write-subs --sub-lang pt,en --convert-subs srt --embed-metadata --embed-subs --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --no-check-certificate --verbose "$alvo"; deactivate
+
+  if [ "$3" == "-F" ]; then
+    video=$(ls *.mp4 | head -1)
+    ffmpeg -i "$video" -vf "fps=5" frame%04d.png
+  fi
+
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
+
+elif [ "$1" == "---Search" ]; then
+  echo -e "\033[0;32m[+] $alvo\033[0m\n"
+  json1=$(curl -s "https://www.googleapis.com/customsearch/v1?q=${alvo}&key=_KEY_&cx=_ID_" | jq -r '.items[]?.link'); echo -e "\033[0;32m$json1\033[0m"
+  echo -e "\n\033[0;32m[+] Finished\033[0m\n"
+
+elif [ "$1" == "---User" ]; then
   user=$2
   userm=$(echo "$user" | sed 's/^[a-z]/\U&/') # ^[a-z] Identifica a primeira letra do nome que está em minúscula \U& converte essa letra em maiúscula.
   # curl: É uma ferramenta de linha de comando para fazer requisições a URLs. Ele suporta vários protocolos, incluindo HTTP, HTTPS, FTP, entre outros.
@@ -292,7 +311,7 @@ elif [ "$1" == "---user" ]; then
 
   vinteconto=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://vinteconto.com.br/public/profile/$user" | grep "200")
   if [ -n "$vinteconto" ]; then
-    echo -e "\033[0;32m[+] https://vinteconto.com.br/public/profile/$user\033[0m"
+     echo -e "\033[0;32m[+] https://vinteconto.com.br/public/profile/$user\033[0m"
   fi
 
   crackmes=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://crackmes.one/user/$user" | grep "200")
@@ -613,7 +632,7 @@ elif [ "$1" == "---user" ]; then
     echo -e "\033[0;32m[+] https://www.blipfoto.com/$user\033[0m"
   fi
 
-  blogbang=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://blog.bang.com/author/$user/" | grep "200")
+  blogbang=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.---Forensic-Video0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://blog.bang.com/author/$user/" | grep "200")
   if [ -n "$blogbang" ]; then
     echo -e "\033[0;32m[+] https://blog.bang.com/author/$user/\033[0m"
   fi
@@ -856,7 +875,7 @@ elif [ "$1" == "---user" ]; then
   if [ -n "$eporneru" ]; then
     echo -e "\033[0;32m[+] https://www.eporner.com/profile/$user/\033[0m"
   fi
-  
+
   xcams=$(curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0 (pt-BR)" -o /dev/null -s -w "%{http_code}\n" "https://www.xcams.cam/en/profile/$user/" | grep "200")
   if [ -n "$xcams" ]; then
     echo -e "\033[0;32m[+] https://www.xcams.cam/en/profile/$user/\033[0m"
@@ -891,9 +910,12 @@ elif [ "$1" == "---user" ]; then
 
 elif [ "$1" == "-h" ]; then
   echo -e "\033[0;32mCOMMANDS:\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---spider-links [URL]\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---spider-emails [URL]\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---cache [URL]\033[0m"
-  echo -e "\033[0;32mshellspy.sh ---user [USER]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Spider-Links [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Spider-Emails [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Check-Cache [URL]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Shodan [DOMAIN.COM]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Download-V [URL] -F\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---Search [DORKS]\033[0m"
+  echo -e "\033[0;32mshellspy.sh ---User [USER]\033[0m"
   echo -e "\033[0;32mshellspy.sh -h\033[0m\n"
 fi
