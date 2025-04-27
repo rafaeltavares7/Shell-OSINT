@@ -3,10 +3,13 @@ Script Bash para coleta de informações em testes de penetração e investigaç
 
 Comandos Principais (Menu):
 
-    ---spider-links [URL] → Extrai todos os links de uma página web.
-    ---spider-emails [URL] → Coleta e-mails encontrados no site.
-    ---cache [URL] → Verifica versões em cache (Archive).
-    ---user [USER] → Busca por pelo nome de usuario (ex: redes sociais).
+    ---spider-links [URL] Extrai todos os links de uma página web.
+    ---spider-emails [URL] Coleta e-mails encontrados no site.
+    ---cache [URL] Verifica versões em cache (Archive).
+    ---Shodan [DOMAIN.COM] Verifica o IP do dominio com o Shodan.
+    ---Download-V [URL] -F Faz download de videos de multiplas plataformas. -F Captura frames é opcional.
+    ---Search [DORKS] Usa a API do Google PSE para pesquisas.
+    ---user [USER] Busca por pelo nome de usuario (ex: redes sociais).
     -h → Exibe este menu de ajuda.
 
 Uso Básico: ./shellspy.sh ---spider-emails https://exemplo.com
